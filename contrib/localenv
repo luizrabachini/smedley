@@ -2,7 +2,17 @@ LOG_HANDLERS=logconsole
 LOG_FILE=logs/smedley.log
 LOGENTRIES_TOKEN=
 
+
 TASKS_LOADER=file
 TASKS_FILE_PATH=
 TASKS_MASTER_SERVER=
 TASKS_MASTER_SERVER_TIMEOUT=3
+
+
+# Extensions / Selenium
+
+WEB_DRIVER=firefox
+#WEB_DRIVER=phantomjs
+
+# Configure to use Firefox web driver
+FIREFOX_GECKODRIVER_PATH=

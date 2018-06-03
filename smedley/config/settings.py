@@ -6,7 +6,10 @@ LOADERS = {
     'server': 'smedley.core.loaders.ServerTaskLoader'
 }
 
-DRIVERS = {}
+DRIVERS = {
+    'selenium': 'smedley.extensions.selenium'
+}
+
 
 LOGGING = {
     'version': 1,
@@ -60,3 +63,11 @@ TASKS_LOADER = config('TASKS_LOADER')
 TASKS_FILE_PATH = config('TASKS_FILE_PATH')
 TASKS_MASTER_SERVER = config('TASKS_MASTER_SERVER')
 TASKS_MASTER_SERVER_TIMEOUT = config('TASKS_MASTER_SERVER_TIMEOUT', cast=int)
+
+
+# Extensions / Selenium
+
+DEFAULT_WINDOW_SIZE = (1024, 768)  # pixels
+DEFAULT_DRIVER_WAIT = 5  # seconds
+
+FIREFOX_GECKODRIVER_PATH = config('FIREFOX_GECKODRIVER_PATH')
