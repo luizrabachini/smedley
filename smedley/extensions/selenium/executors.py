@@ -1,10 +1,10 @@
 import logging
 import time
 
-from selenium import webdriver
 from selenium.common.exceptions import NoSuchElementException
+from selenium.webdriver import Firefox, PhantomJS
 from selenium.webdriver.common.by import By
-from selenium.webdriver.firefox.options import Options
+from selenium.webdriver.firefox.options import Options as FirefoxOptions
 from selenium.webdriver.support import expected_conditions as ec
 from selenium.webdriver.support.ui import WebDriverWait
 from simple_settings import settings
@@ -44,13 +44,18 @@ class SeleniumTaskExecutor(BaseTaskExecutor):
     def _get_firefox_browser(self):
         logger.info('Loading Firefox Web Driver')
 
-        options = Options()
-        # options.add_argument('--headless')
+        options = FirefoxOptions()
+        if settings.BROWSER_HEADLESS:
+            options.add_argument('--headless')
 
-        browser = webdriver.Firefox(
-            firefox_options=options,
-            executable_path=settings.FIREFOX_GECKODRIVER_PATH
-        )
+        try:
+            browser = Firefox(
+                firefox_options=options,
+                executable_path=settings.FIREFOX_GECKODRIVER_PATH
+            )
+        except Exception:
+            logger.exception('Erro on load Firefox browser.')
+            raise BrowserNotFound(browser=FIREFOX)
 
         logger.info('Firefox Web Driver loaded')
 
@@ -59,7 +64,11 @@ class SeleniumTaskExecutor(BaseTaskExecutor):
     def _get_phantomjs_browser(self):
         logger.info('Loading PhantomJS Web Driver')
 
-        browser = webdriver.PhantomJS()
+        try:
+            browser = PhantomJS()
+        except Exception:
+            logger.exception('Erro on load PhantomJS browser.')
+            raise BrowserNotFound(browser=PHANTOMJS)
 
         logger.info('PhantomJS Web Driver loaded')
 

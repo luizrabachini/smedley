@@ -14,5 +14,7 @@ TASKS_MASTER_SERVER_TIMEOUT=3
 WEB_DRIVER=firefox
 #WEB_DRIVER=phantomjs
 
+BROWSER_HEADLESS=True
+
 # Configure to use Firefox web driver
 FIREFOX_GECKODRIVER_PATH=
