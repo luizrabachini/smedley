@@ -51,10 +51,10 @@ class SeleniumTaskExecutor(BaseTaskExecutor):
         try:
             browser = Firefox(
                 firefox_options=options,
-                executable_path=settings.FIREFOX_GECKODRIVER_PATH
+                executable_path=settings.FIREFOX_EXECUTABLE_PATH
             )
         except Exception:
-            logger.exception('Erro on load Firefox browser.')
+            logger.exception('Error on load Firefox browser.')
             raise BrowserNotFound(browser=FIREFOX)
 
         logger.info('Firefox Web Driver loaded')
@@ -64,10 +64,15 @@ class SeleniumTaskExecutor(BaseTaskExecutor):
     def _get_phantomjs_browser(self):
         logger.info('Loading PhantomJS Web Driver')
 
+        if not settings.BROWSER_HEADLESS:
+            logger.warning('PhamtomJS run just in headless mode')
+
         try:
-            browser = PhantomJS()
+            browser = PhantomJS(
+                executable_path=settings.PHANTOMJS_EXECUTABLE_PATH
+            )
         except Exception:
-            logger.exception('Erro on load PhantomJS browser.')
+            logger.exception('Error on load PhantomJS browser.')
             raise BrowserNotFound(browser=PHANTOMJS)
 
         logger.info('PhantomJS Web Driver loaded')
@@ -79,9 +84,10 @@ class SeleniumTaskExecutor(BaseTaskExecutor):
         if wait:
             time.sleep(wait)
 
+    def _apply_wait_for(self, step):
         wait_for = getattr(step, 'wait_for', None)
         if wait_for:
-            timeout = wait_for.timeout or settings.DEFAULT_DRIVER_WAIT
+            timeout = wait_for.timeout or settings.BROWSER_DEFAULT_WAIT
             locator = (
                 getattr(By, wait_for.find_method.upper()),
                 wait_for.find_value
@@ -140,3 +146,4 @@ class SeleniumTaskExecutor(BaseTaskExecutor):
             element.send_keys(step.content)
 
         self._apply_wait(step=step)
+        self._apply_wait_for(step=step)
