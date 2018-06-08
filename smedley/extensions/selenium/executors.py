@@ -34,9 +34,9 @@ class SeleniumTaskExecutor(BaseTaskExecutor):
     name = 'Selenium Task Executor'
 
     _validators = {
-        'element': ElementValidator,
-        'url_regex': SourceRegexValidator,
-        'source_regex': UrlRegexValidator
+        'element': ElementValidator(),
+        'url_regex': SourceRegexValidator(),
+        'source_regex': UrlRegexValidator()
     }
 
     _browser = None
@@ -97,7 +97,7 @@ class SeleniumTaskExecutor(BaseTaskExecutor):
             )
 
     def _get_validator(self, validator_name):
-        return self._validators[validator_name]()
+        return self._validators[validator_name]
 
     def _load(self, task):
         browser = task.browser
@@ -113,7 +113,7 @@ class SeleniumTaskExecutor(BaseTaskExecutor):
         if window:
             window_size = (window.width, window.height)
         else:
-            window_size = settings.DEFAULT_WINDOW_SIZE
+            window_size = settings.BROWSER_WINDOW_SIZE
 
         _browser.set_window_size(*window_size)
 

@@ -1,8 +1,10 @@
 import mock
 import pytest
+from selenium.common.exceptions import NoSuchElementException
 from selenium.webdriver.common.by import By
 from simple_settings import settings
 
+from smedley.core.validators.exceptions import ValidationError
 from ..executors import SeleniumTaskExecutor
 from ..exceptions import BrowserNotFound
 
@@ -148,22 +150,130 @@ class TestSeleniumTaskExecutor:
         assert not until.called
 
     def test__get_validator(self):
-        pass
+        v1 = mock.Mock()
+        v2 = mock.Mock()
+        validators = {
+            'v1': v1,
+            'v2': v2
+        }
+        self.executor._validators = validators
+        assert self.executor._get_validator(validator_name='v1') == v1
+        assert self.executor._get_validator(validator_name='v2') == v2
 
-    def test__load(self):
-        pass
+    @mock.patch.object(SeleniumTaskExecutor, '_get_firefox_browser')
+    def test__load_firefox(self, _get_firefox_browser, selenium_task):
+        _get_firefox_browser.return_value = mock.MagicMock()
+        self.executor._load(task=selenium_task)
+        assert _get_firefox_browser.called
 
-    def test__start_task(self):
-        pass
+    @mock.patch.object(SeleniumTaskExecutor, '_get_phantomjs_browser')
+    def test__load_phantomjs(self, _get_phantomjs_browser, selenium_task):
+        selenium_task.browser = 'phantomjs'
+        _get_phantomjs_browser.return_value = mock.MagicMock()
+        self.executor._load(task=selenium_task)
+        assert _get_phantomjs_browser.called
 
-    def test__finalize_task(self):
-        pass
+    @mock.patch.object(SeleniumTaskExecutor, '_get_firefox_browser')
+    def test__load_default_window_size(
+        self,
+        _get_firefox_browser,
+        selenium_task
+    ):
+        set_window_size = mock.MagicMock()
+        browser = mock.MagicMock(set_window_size=set_window_size)
+        _get_firefox_browser.return_value = browser
+        self.executor._load(task=selenium_task)
+        set_window_size.assert_called_with(1024, 768)
+        assert self.executor._browser
+        assert self.executor._state
+        assert 'browser' in self.executor._context
 
-    def test__execute_step_click(self):
-        pass
+    @mock.patch.object(SeleniumTaskExecutor, '_get_firefox_browser')
+    def test__load_window_size(
+        self,
+        _get_firefox_browser,
+        selenium_task
+    ):
+        selenium_task.update({
+            'window': {
+                'width': 2048,
+                'height': 1024
+            }
+        })
+        set_window_size = mock.MagicMock()
+        browser = mock.MagicMock(set_window_size=set_window_size)
+        _get_firefox_browser.return_value = browser
+        self.executor._load(task=selenium_task)
+        set_window_size.assert_called_with(2048, 1024)
 
-    def test__execute_step_fill(self):
-        pass
+    def test__start_task(self, selenium_task):
+        browser_get = mock.MagicMock()
+        browser = mock.MagicMock(get=browser_get)
+        self.executor._browser = browser
+        self.executor._start_task(task=selenium_task)
+        browser_get.assert_called_with(selenium_task.url)
 
-    def test__execute_step_no_such_element(self):
-        pass
+    def test__finalize_task(self, selenium_task):
+        browser_quit = mock.MagicMock()
+        browser = mock.MagicMock(quit=browser_quit)
+        self.executor._browser = browser
+        self.executor._finalize_task(task=selenium_task)
+        assert browser_quit.quit
+
+    @mock.patch('smedley.extensions.selenium.executors.get_element')
+    @mock.patch.object(SeleniumTaskExecutor, '_apply_wait')
+    @mock.patch.object(SeleniumTaskExecutor, '_apply_wait_for')
+    def test__execute_step(
+        self,
+        _apply_wait_for,
+        _apply_wait,
+        get_element,
+        step_click
+    ):
+        _apply_wait_for.return_value = None
+        _apply_wait.return_value = None
+        get_element.return_value = mock.Mock()
+        self.executor._execute_step(step=step_click)
+        assert _apply_wait_for.called
+        assert _apply_wait.called
+        assert get_element.called
+
+    @mock.patch('smedley.extensions.selenium.executors.get_element')
+    @mock.patch.object(SeleniumTaskExecutor, '_apply_wait')
+    @mock.patch.object(SeleniumTaskExecutor, '_apply_wait_for')
+    def test__execute_step_click(
+        self,
+        _apply_wait_for,
+        _apply_wait,
+        get_element,
+        step_click
+    ):
+        _apply_wait_for.return_value = None
+        _apply_wait.return_value = None
+        click = mock.Mock()
+        get_element.return_value = mock.Mock(click=click)
+        self.executor._execute_step(step=step_click)
+        assert click.called
+
+    @mock.patch('smedley.extensions.selenium.executors.get_element')
+    @mock.patch.object(SeleniumTaskExecutor, '_apply_wait')
+    @mock.patch.object(SeleniumTaskExecutor, '_apply_wait_for')
+    def test__execute_step_fill(
+        self,
+        _apply_wait_for,
+        _apply_wait,
+        get_element,
+        step_fill
+    ):
+        _apply_wait_for.return_value = None
+        _apply_wait.return_value = None
+        send_keys = mock.Mock()
+        get_element.return_value = mock.Mock(send_keys=send_keys)
+        self.executor._execute_step(step=step_fill)
+        send_keys.assert_called_with(step_fill.content)
+
+    @mock.patch('smedley.extensions.selenium.executors.get_element')
+    def test__execute_step_no_such_element(self, get_element, step_click):
+        get_element.side_effect = NoSuchElementException()
+        with pytest.raises(ValidationError):
+            self.executor._execute_step(step=step_click)
