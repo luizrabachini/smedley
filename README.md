@@ -1,7 +1,7 @@
 Smedley
 =======
 
-A framework to monitor applications.
+A small framework to monitor web applications.
 
 
 Install
