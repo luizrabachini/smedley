@@ -6,5 +6,6 @@ env:
   - SETTINGS=smedley.config.settings
 install:
   - make requirements-pip
+  - cp contrib/localenv .env
 script:
   - make test
