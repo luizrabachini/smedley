@@ -60,4 +60,5 @@ To run tests, just execute:
 To Do
 -----
 
+- Add docker config.
 - Add integration tests.
