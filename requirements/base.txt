@@ -3,5 +3,6 @@ Cerberus==1.1
 fire==0.1.0
 python-decouple==3.0
 requests==2.13.0
+selenium==3.11.0
 simple-settings==0.12.0
 Logentries==0.17
