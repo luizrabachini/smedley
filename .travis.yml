@@ -5,6 +5,6 @@ python:
 env:
   - SETTINGS=smedley.config.settings
 install:
-  - pip install -r requirements/development.txt
+  - make requirements-pip
 script:
   - make test
