@@ -35,12 +35,14 @@ Configure
 	- TASKS_MASTER_SERVER: URL of server to load tasks (used with `TASKS_LOADER=server`);
 	- TASKS_MASTER_SERVER_TIMEOUT: Max time to wait for a response from master server. Default: 3 seconds;
 
-- Selenium
+- Extensions
 
-	- WEB_DRIVER: Browser to use in tests;
-	- BROWSER_HEADLESS: If True, will execute browser without interface. If False, will open a browser window to execute tests. Default: True.
-	- FIREFOX_EXECUTABLE_PATH: Path to [Geckodriver](https://github.com/mozilla/geckodriver) executable (used with `WEB_DRIVER=firefox`);
-	- PHANTOMJS_EXECUTABLE_PATH (Deprecated): Path to [PhantomJs](http://phantomjs.org/) executable (used with `WEB_DRIVER=phantomjs`).
+	- Selenium
+
+		- WEB_DRIVER: Browser to use in tests;
+		- BROWSER_HEADLESS: If True, will execute browser without interface. If False, will open a browser window to execute tests. Default: True.
+		- FIREFOX_EXECUTABLE_PATH: Path to [Geckodriver](https://github.com/mozilla/geckodriver) executable (used with `WEB_DRIVER=firefox`);
+		- PHANTOMJS_EXECUTABLE_PATH (Deprecated): Path to [PhantomJs](http://phantomjs.org/) executable (used with `WEB_DRIVER=phantomjs`).
 
 
 Execute
@@ -60,5 +62,10 @@ To run tests, just execute:
 To Do
 -----
 
-- Add docker config.
-- Add integration tests.
+- Add documentation;
+- Add integration tests;
+- Add support to execute app with docker;
+- Identify tasks by id to use in logs and metrics; 
+- Improve log messages;
+- Capute tasks metrics;
+- Take screenshots on task failures.
