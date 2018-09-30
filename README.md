@@ -64,10 +64,13 @@ To run tests, just execute:
 To Do
 -----
 
-- Add documentation;
-- Add integration tests;
-- Add support to execute app with docker;
-- Identify tasks by id to use in logs and metrics; 
-- Improve log messages;
-- Capute tasks metrics;
-- Take screenshots on task failures.
+- Project:
+	- [ ] Add documentation;
+	- [ ] Add integration tests;
+	- [ ] Improve log messages;
+	- [ ] Identify tasks by id.
+
+- Features:
+	- [ ] Capture screenshots on task failures;
+	- [x] Add Firefox support inside Docker;
+	- [ ] Add Chrome support inside Docker.

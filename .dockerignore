@@ -1,0 +1,11 @@
+*.py[cod]
+*.log*
+*.sqlite3
+__pycache__
+.cache
+.bin
+.pep8
+.editorconfig
+.travis.yml
+.git
+.gitignore

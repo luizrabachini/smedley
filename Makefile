@@ -13,6 +13,7 @@ conf-env:
 	@read continue
 
 requirements-pip:
+	@pip install -U pip
 	@pip install -r requirements/development.txt
 
 run: clean
