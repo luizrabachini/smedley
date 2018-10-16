@@ -61,6 +61,14 @@ To run tests, just execute:
     $ make test
 
 
+Docs
+----
+
+The following chart show how monitoring tasks are executed and how validation are applied for each step.
+
+![Execution Flow](docs/images/ExecutionFlow.jpg)
+
+
 To Do
 -----
 
