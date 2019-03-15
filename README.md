@@ -5,6 +5,8 @@ A small framework to monitor web applications.
 
 [![Build Status](https://travis-ci.org/luizrabachini/smedley.svg?branch=master)](https://travis-ci.org/luizrabachini/smedley)
 
+[![Coverage Status](https://coveralls.io/repos/github/luizrabachini/smedley/badge.svg?branch=master)](https://coveralls.io/github/luizrabachini/smedley?branch=master)
+
 [![Smedley](http://statici.behindthevoiceactors.com/behindthevoiceactors/_img/chars/smedley-woody-woodpecker-6.13.jpg)](http://woodywoodpecker.wikia.com/wiki/Smedley)
 
 
