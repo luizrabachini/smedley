@@ -8,3 +8,5 @@ install:
   - cp contrib/localenv .env
 script:
   - make test
+after_success:
+  - coveralls
