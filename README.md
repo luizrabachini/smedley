@@ -11,9 +11,9 @@ A small framework to monitor web applications.
 Install
 -------
 
-Create a virtualenv (use [virtualenvwrapper](https://virtualenvwrapper.readthedocs.org/en/latest/)) with Python 3:
+Create a virtualenv with `Python 3.7` with [virtualenvwrapper](https://virtualenvwrapper.readthedocs.org/en/latest/):
 
-    $ mkvirtualenv smedley -p /usr/bin/python3
+    $ mkvirtualenv smedley -p /usr/bin/python3.7
 
 Install dependencies:
 

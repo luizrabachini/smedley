@@ -26,7 +26,7 @@ shell: clean
 
 test: clean
 	@export settings=$(SETTINGS) && \
-	py.test smedley 
+	py.test --cov smedley 
 
 test-matching: clean
 	@export settings=$(SETTINGS) && \
