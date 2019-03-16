@@ -6,3 +6,4 @@ requests==2.21.0
 selenium==3.11.0
 simple-settings==0.12.0
 Logentries==0.17
+PyYAML==5.1

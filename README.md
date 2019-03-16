@@ -80,5 +80,6 @@ To Do
 
 - Features:
 	- [ ] Capture screenshots on task failures;
+	- [ ] Add Chrome support inside Docker;
 	- [x] Add Firefox support inside Docker;
-	- [ ] Add Chrome support inside Docker.
+	- [x] Create tasks using yaml files.
