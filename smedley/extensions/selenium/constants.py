@@ -4,7 +4,7 @@ FIREFOX = 'firefox'
 PHANTOMJS = 'phantomjs'
 BROWSERS = (
     FIREFOX,
-    PHANTOMJS
+    PHANTOMJS,
 )
 
 
@@ -14,5 +14,5 @@ CLICK = 'click'
 FILL = 'fill'
 ACTIONS = (
     CLICK,
-    FILL
+    FILL,
 )

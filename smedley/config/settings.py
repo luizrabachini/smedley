@@ -74,3 +74,12 @@ BROWSER_DEFAULT_WAIT = 5  # seconds
 
 FIREFOX_EXECUTABLE_PATH = config('FIREFOX_EXECUTABLE_PATH', default='')
 PHANTOMJS_EXECUTABLE_PATH = config('PHANTOMJS_EXECUTABLE_PATH', default='')
+
+
+# Extensions / Requests
+
+DEFAULT_REQUESTS_TIMEOUT = config(
+    'DEFAULT_REQUESTS_TIMEOUT',
+    cast=int,
+    default=2
+)
