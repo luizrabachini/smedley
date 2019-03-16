@@ -1,7 +1,7 @@
 [
     {
         "name": "Test Personal Page",
-        "url": "http://luizrabachini.com",
+        "url": "https://luizrabachini.com",
         "driver": "selenium",
         "browser": "firefox",
         "steps": [
